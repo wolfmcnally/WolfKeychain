@@ -19,7 +19,7 @@
 import Foundation
 import WolfBase
 
-public struct KeyChain {
+public struct Keychain {
     public let account: String
     public let key: String
     public let label: String
