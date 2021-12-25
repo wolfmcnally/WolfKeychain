@@ -101,11 +101,7 @@ public struct KeyChain {
         guard let data = try read() else {
             return nil
         }
-        if type == String.self {
-            return data.utf8 as! T?
-        } else {
-            return try JSONDecoder().decode(type, from: data)
-        }
+        return try JSONDecoder().decode(type, from: data)
     }
 
     public func update(data: Data, upsert: Bool = true) throws {
