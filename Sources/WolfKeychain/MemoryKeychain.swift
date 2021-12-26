@@ -12,11 +12,21 @@ public final class MemoryKeychain: Keychain {
     public let key: String
     public var data: Data?
 
-    public init(account: String, key: String) {
-        self.account = account
-        self.key = key
+    public init(account: String? = nil, key: String? = nil, data: Data? = nil) {
+        self.account = account ?? "username"
+        self.key = key ?? "password"
+        self.data = data
     }
-    
+
+    public convenience init(account: String? = nil, key: String? = nil, string: String) {
+        self.init(account: account, key: key, data: string.utf8Data)
+    }
+
+    public convenience init<T: Codable>(account: String? = nil, key: String? = nil, object: T) throws {
+        let data = try JSONEncoder().encode(object)
+        self.init(account: account, key: key, data: data)
+    }
+
     public func create(data: Data) throws {
         guard self.data == nil else {
             throw KeychainError.couldNotCreate(1)
